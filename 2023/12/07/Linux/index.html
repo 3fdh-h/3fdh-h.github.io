@@ -247,11 +247,21 @@
 <h3 id="仅主机模式"><a href="#仅主机模式" class="headerlink" title="仅主机模式"></a>仅主机模式</h3><ul>
 <li>虚拟机只与主机共享一个专用网络，外部网络无法访问</li>
 </ul>
-<h2 id="修改静态IP"><a href="#修改静态IP" class="headerlink" title="修改静态IP"></a>修改静态IP</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line"><span class="comment"># 进入了ens33网络的配置文件，修改其BOOTPROTO为static,即将网络IP改为静态，方便每一次远程登陆时都是同一个ip</span></span><br><span class="line"><span class="comment"># 然后再在文档的最后加上ip、网关、DNS地址，如下：</span></span><br><span class="line"><span class="comment"># IP地址</span></span><br><span class="line">IPADDR=192.168.80.125</span><br><span class="line"><span class="comment"># 网关</span></span><br><span class="line">GATEWAY=192.168.80.2</span><br><span class="line"><span class="comment"># 域名解析器</span></span><br><span class="line">DNS1=192.168.80.2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入命令模式wq保存并退出</span></span><br></pre></td></tr></table></figure>
+<h2 id="修改静态IP"><a href="#修改静态IP" class="headerlink" title="修改静态IP"></a>修改静态IP</h2><pre><code class="highlight bash">vim /etc/sysconfig/network-scripts/ifcfg-ens33
+<span class="comment"># 进入了ens33网络的配置文件，修改其BOOTPROTO为static,即将网络IP改为静态，方便每一次远程登陆时都是同一个ip</span>
+<span class="comment"># 然后再在文档的最后加上ip、网关、DNS地址，如下：</span>
+<span class="comment"># IP地址</span>
+IPADDR=192.168.80.125
+<span class="comment"># 网关</span>
+GATEWAY=192.168.80.2
+<span class="comment"># 域名解析器</span>
+DNS1=192.168.80.2
+
+<span class="comment"># 进入命令模式wq保存并退出</span></code></pre>
 
 <h2 id="配置主机名"><a href="#配置主机名" class="headerlink" title="配置主机名"></a>配置主机名</h2><h3 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h3><ul>
 <li><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname 主机名</span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash">hostnamectl set-hostname 主机名</code></pre></li>
 </ul>
 <h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><ul>
 <li><p>目的：使主机名与主机IP一 一 对应，方便构建集群之间相互通信</p>
@@ -259,7 +269,8 @@
 <li><p>主机名与IP之间的关系相当于通讯录中人名与电话号码的关系，一 一对应</p>
 </li>
 <li><p>在hosts文件中加入本机IP</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br><span class="line"><span class="comment"># 然后直接在文件后加上IP地址</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">vim /etc/hosts
+<span class="comment"># 然后直接在文件后加上IP地址</span></code></pre>
 </li>
 <li><p>hosts文件中存放的是本地的域名解析记录，用于搭建本地环境搭建，更大范围的域名解析仍需要DNS服务器</p>
 </li>
@@ -271,20 +282,20 @@
 <li><p>在Linux中，服务又称守护进程（demond process），即系统启动时自动运行的进程</p>
 </li>
 <li><p>基本语法（centos6中常用，7中基本不用了）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service 服务名 start | stop | restart | status  <span class="comment"># 启动|停止|重启|查看状态</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">service 服务名 start | stop | restart | status  <span class="comment"># 启动|停止|重启|查看状态</span></code></pre>
 </li>
 <li><p>查看服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /etc/init.d</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">ls</span> /etc/init.d</code></pre>
 
 <p>发现只有几个服务可见，因为在centos7中已经不用这个命令查看服务了</p>
 </li>
 </ul>
 <h3 id="Centos7"><a href="#Centos7" class="headerlink" title="Centos7"></a>Centos7</h3><ul>
 <li><p>语法</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start|stop|restart|status 服务名</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">systemctl start|stop|restart|status 服务名</code></pre>
 </li>
 <li><p>查看服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /usr/lib/systemd/system</span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash"><span class="built_in">ls</span> /usr/lib/systemd/system</code></pre></li>
 </ul>
 <h2 id="系统运行级别"><a href="#系统运行级别" class="headerlink" title="系统运行级别"></a>系统运行级别</h2><ul>
 <li><p>系统自启动配置</p>
@@ -293,7 +304,7 @@
 </ul>
 <h3 id="运行级别-runlevel"><a href="#运行级别-runlevel" class="headerlink" title="运行级别(runlevel)"></a>运行级别(runlevel)</h3><p>开机 –&gt;BIOS –&gt; &#x2F;boot –&gt; init进程 –&gt; 运行级别 –运行级对应的服务</p>
 <p>查看默认级别：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/inittab</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">vi /etc/inittab</code></pre>
 
 <ol>
 <li>Linux系统中有七种运行级别：<font color='red'>通常是级别3和5</font></li>
@@ -314,7 +325,7 @@
 <p>graphical.target 等价于原运行级别5（多用户有网，有图形界面）</p>
 </li>
 <li><p>查看当前运行级别</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl get-default</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">systemctl get-default</code></pre>
 </li>
 <li><p>切换运行级别</p>
 <p>命令行：init 级别</p>
@@ -322,13 +333,27 @@
 </li>
 </ol>
 <h2 id="配置服务开机启动"><a href="#配置服务开机启动" class="headerlink" title="配置服务开机启动"></a>配置服务开机启动</h2><p>开机自启动命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启自启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> 服务名</span><br><span class="line"><span class="comment"># 关闭开机自启</span></span><br><span class="line">systemctl diable 服务名</span><br><span class="line"><span class="comment"># chkconfig命令关闭/开启服务</span></span><br><span class="line">chkconfig 服务名 off/on</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="comment"># 开启自启动</span>
+systemctl <span class="built_in">enable</span> 服务名
+<span class="comment"># 关闭开机自启</span>
+systemctl diable 服务名
+<span class="comment"># chkconfig命令关闭/开启服务</span>
+chkconfig 服务名 off/on</code></pre>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig命令查询网络服务的运行级别开启状态</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">chkconfig命令查询网络服务的运行级别开启状态</code></pre>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 防火墙开启与关闭</span></span><br><span class="line"><span class="comment"># 关闭/开启防火墙</span></span><br><span class="line">systemctl stop/start firewalld</span><br><span class="line"><span class="comment"># 打开/关闭 防火墙开机自启</span></span><br><span class="line">systemctl <span class="built_in">enable</span>/disable firewalld</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="comment"># 防火墙开启与关闭</span>
+<span class="comment"># 关闭/开启防火墙</span>
+systemctl stop/start firewalld
+<span class="comment"># 打开/关闭 防火墙开机自启</span>
+systemctl <span class="built_in">enable</span>/disable firewalld</code></pre>
 
-<h2 id="关机重启命令"><a href="#关机重启命令" class="headerlink" title="关机重启命令"></a>关机重启命令</h2><h3 id="关机命令"><a href="#关机命令" class="headerlink" title="关机命令"></a>关机命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shutdown命令</span></span><br><span class="line">shutdown <span class="comment"># 默认一分钟后关机</span></span><br><span class="line">shutdown -c <span class="comment"># 取消关机</span></span><br><span class="line">shutdown 数字 <span class="comment"># 几分钟后关机</span></span><br><span class="line">shutdown 时间 <span class="comment"># 定时关机</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="关机重启命令"><a href="#关机重启命令" class="headerlink" title="关机重启命令"></a>关机重启命令</h2><h3 id="关机命令"><a href="#关机命令" class="headerlink" title="关机命令"></a>关机命令</h3><pre><code class="highlight bash"><span class="comment"># shutdown命令</span>
+shutdown <span class="comment"># 默认一分钟后关机</span>
+shutdown -c <span class="comment"># 取消关机</span>
+shutdown 数字 <span class="comment"># 几分钟后关机</span>
+shutdown 时间 <span class="comment"># 定时关机</span>
+</code></pre>
 
 <h3 id="关机前系统做的事情"><a href="#关机前系统做的事情" class="headerlink" title="关机前系统做的事情"></a>关机前系统做的事情</h3><ol>
 <li><p>sync 将数据由内存同步到硬盘中</p>
@@ -386,10 +411,14 @@
 <li><p>使用绝对路径切换，从根目录开始，以 &#x2F; 开头</p>
 </li>
 <li><p>使用相对路径</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@cent1 桌面]<span class="comment"># cd ../视频</span></span><br><span class="line">[root@cent1 视频]<span class="comment"># cd ../桌面</span></span><br><span class="line"><span class="comment"># cd .. 表示从当前目录返回上一级目录</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">[root@cent1 桌面]<span class="comment"># cd ../视频</span>
+[root@cent1 视频]<span class="comment"># cd ../桌面</span>
+<span class="comment"># cd .. 表示从当前目录返回上一级目录</span></code></pre>
 </li>
 <li><p>其他用法</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> - <span class="comment"># 返回到上一次所在的位置，可以反复横跳</span></span><br><span class="line"><span class="built_in">cd</span>  <span class="comment"># 回到用户的主目录</span></span><br><span class="line"><span class="built_in">cd</span> /home/username <span class="comment">#切换其他用户的目录</span></span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash"><span class="built_in">cd</span> - <span class="comment"># 返回到上一次所在的位置，可以反复横跳</span>
+<span class="built_in">cd</span>  <span class="comment"># 回到用户的主目录</span>
+<span class="built_in">cd</span> /home/username <span class="comment">#切换其他用户的目录</span></code></pre></li>
 </ol>
 </li>
 <li><p>mkdir 创建文件夹</p>
@@ -401,7 +430,10 @@
 <li><p>mkdir 接多个目录名，同时在一个路径创建多个目录</p>
 </li>
 <li><p>如果想创建多级文件夹，需要先创建父级文件夹，再创建子级文件夹</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个目录包含d/e/f</span></span><br><span class="line"><span class="built_in">mkdir</span> d d/e d/e/f</span><br><span class="line"><span class="comment"># 更简单的一种方法创建带目录的文件夹</span></span><br><span class="line"><span class="built_in">mkdir</span> -p d/e/f</span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash"><span class="comment"># 创建一个目录包含d/e/f</span>
+<span class="built_in">mkdir</span> d d/e d/e/f
+<span class="comment"># 更简单的一种方法创建带目录的文件夹</span>
+<span class="built_in">mkdir</span> -p d/e/f</code></pre></li>
 </ol>
 </li>
 <li><p>rmdir 删除文件夹</p>
@@ -409,35 +441,55 @@
 <li><p>方法基本同创建</p>
 </li>
 <li><p>如果目录里还有目录无法直接删除，需要层层删除</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除整个目录d d/e/f</span></span><br><span class="line"><span class="built_in">rmdir</span> d/e/f d/e d</span><br><span class="line"><span class="comment"># 直接自动删除所有的子级目录</span></span><br><span class="line"><span class="built_in">rmdir</span> -p d/e/f <span class="comment">#删除f后如果父级目录是空则删除父级目录</span></span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash"><span class="comment"># 删除整个目录d d/e/f</span>
+<span class="built_in">rmdir</span> d/e/f d/e d
+<span class="comment"># 直接自动删除所有的子级目录</span>
+<span class="built_in">rmdir</span> -p d/e/f <span class="comment">#删除f后如果父级目录是空则删除父级目录</span></code></pre></li>
 </ol>
 </li>
 </ul>
 <h3 id="文件操作命令"><a href="#文件操作命令" class="headerlink" title="文件操作命令"></a>文件操作命令</h3><ul>
 <li><p>创建空文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> 文件名称/路径	<span class="comment"># touch命令直接创建文件</span></span><br><span class="line">vim 文件名		<span class="comment"># 使用vim编辑器创建文件，需要保存，未保存退出文件会消失</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">touch</span> 文件名称/路径	<span class="comment"># touch命令直接创建文件</span>
+vim 文件名		<span class="comment"># 使用vim编辑器创建文件，需要保存，未保存退出文件会消失</span></code></pre>
 </li>
 <li><p>cp 复制文件或目录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">复制文件：cp 源文件 目的目录（或者直接加文件路径，可以将其覆盖，进行内容替换）</span><br><span class="line">复制目录：cp -r 源目录 目的目录</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bahs">复制文件：cp 源文件 目的目录（或者直接加文件路径，可以将其覆盖，进行内容替换）
+复制目录：cp -r 源目录 目的目录</code></pre>
 
 <p>​	<strong>‘&#x2F;‘+ 命令是原生命令</strong></p>
 </li>
 <li><p>rm 删除文件或目录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -r 递归删除目录中的所有内容</span><br><span class="line"><span class="built_in">rm</span> -f 无需确认，强制执行删除操作</span><br><span class="line"><span class="built_in">rm</span> -v 显示指令的详细执行过程</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">rm</span> -r 递归删除目录中的所有内容
+<span class="built_in">rm</span> -f 无需确认，强制执行删除操作
+<span class="built_in">rm</span> -v 显示指令的详细执行过程</code></pre>
 </li>
 <li><p>mv 移动文件与目录或重命名</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 移动文件</span></span><br><span class="line"><span class="built_in">mv</span> 文件 目的目录</span><br><span class="line"><span class="built_in">mv</span> test.txt test1</span><br><span class="line"><span class="comment"># 移动文件且重命名</span></span><br><span class="line"><span class="built_in">mv</span> 文件 目的目录/想要改的名字</span><br><span class="line">如：<span class="built_in">mv</span> anaconda-ks.cfg /home/wangdefuck/1.cfg</span><br><span class="line"><span class="comment"># 直接重命名</span></span><br><span class="line"><span class="built_in">mv</span> 文件 改的名字</span><br><span class="line">如：<span class="built_in">mv</span> 1.txt 2.txt</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="comment"># 移动文件</span>
+<span class="built_in">mv</span> 文件 目的目录
+<span class="built_in">mv</span> test.txt test1
+<span class="comment"># 移动文件且重命名</span>
+<span class="built_in">mv</span> 文件 目的目录/想要改的名字
+如：<span class="built_in">mv</span> anaconda-ks.cfg /home/wangdefuck/1.cfg
+<span class="comment"># 直接重命名</span>
+<span class="built_in">mv</span> 文件 改的名字
+如：<span class="built_in">mv</span> 1.txt 2.txt</code></pre>
 </li>
 <li><p>cat 查看文件内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> 文件名</span><br><span class="line"><span class="built_in">cat</span> -n 文件名  <span class="comment">#显示行号</span></span><br><span class="line"><span class="comment"># cat的本质是将标准输入文件的内容送到标准输出文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tac以逆序显示一个文件</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">cat</span> 文件名
+<span class="built_in">cat</span> -n 文件名  <span class="comment">#显示行号</span>
+<span class="comment"># cat的本质是将标准输入文件的内容送到标准输出文件</span>
+
+<span class="comment"># tac以逆序显示一个文件</span></code></pre>
 </li>
 <li><p>pr 详细显示文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pr</span> 文件名</span><br><span class="line"><span class="comment"># 会显示页眉页脚以及时间戳等内容，适合打印文件(print)</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">pr</span> 文件名
+<span class="comment"># 会显示页眉页脚以及时间戳等内容，适合打印文件(print)</span></code></pre>
 
 
 </li>
 <li><p>more 文件内容分屏查看器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more 要查看的文件</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash">more 要查看的文件</code></pre>
 
 <p>空格 ——  向下翻页</p>
 <p>b       ——  往回翻页</p>
@@ -455,17 +507,34 @@
 </ul>
 <h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><h4 id="控制台显示和输出重定向"><a href="#控制台显示和输出重定向" class="headerlink" title="控制台显示和输出重定向"></a>控制台显示和输出重定向</h4><ul>
 <li><p>echo 输出内容到控制台</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> [选项] 输出内容</span><br><span class="line"><span class="built_in">echo</span> -e <span class="comment"># 支持转义</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">echo</span> [选项] 输出内容
+<span class="built_in">echo</span> -e <span class="comment"># 支持转义</span></code></pre>
 </li>
 <li><p>重定向&gt; 追加 &gt;&gt;</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将原本要输出到终端的内容重定向到文件中</span></span><br><span class="line"><span class="built_in">ls</span> &gt; new.txt</span><br><span class="line"><span class="comment"># 将内容追加到文件中</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;文本内容&quot;</span> &gt;&gt; new.txt</span><br><span class="line"><span class="comment"># 将环境变量追加到文件</span></span><br><span class="line"><span class="built_in">echo</span> $环境变量 &gt;&gt; new.txt</span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash"><span class="comment"># 将原本要输出到终端的内容重定向到文件中</span>
+<span class="built_in">ls</span> &gt; new.txt
+<span class="comment"># 将内容追加到文件中</span>
+<span class="built_in">echo</span> <span class="string">&quot;文本内容&quot;</span> &gt;&gt; new.txt
+<span class="comment"># 将环境变量追加到文件</span>
+<span class="built_in">echo</span> $环境变量 &gt;&gt; new.txt</code></pre></li>
 </ul>
 <h4 id="监控文件变化"><a href="#监控文件变化" class="headerlink" title="监控文件变化"></a>监控文件变化</h4><ul>
 <li><p>head 显示文件头部内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认显示前十行</span></span><br><span class="line"><span class="built_in">head</span> 文件</span><br><span class="line"><span class="comment"># 显示文件头部指定行数</span></span><br><span class="line"><span class="built_in">head</span> -n 行数 文件</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="comment"># 默认显示前十行</span>
+<span class="built_in">head</span> 文件
+<span class="comment"># 显示文件头部指定行数</span>
+<span class="built_in">head</span> -n 行数 文件</code></pre>
 </li>
 <li><p>tail 输出文件尾部内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认显示尾十行</span></span><br><span class="line"><span class="built_in">tail</span> 文件</span><br><span class="line"><span class="comment"># 显示指定行数</span></span><br><span class="line"><span class="built_in">tail</span> -n 行数</span><br><span class="line"><span class="comment"># 实时跟踪文档的所有更新</span></span><br><span class="line"><span class="built_in">tail</span> -f 文件</span><br><span class="line"><span class="comment"># ctrl + s 赞同监控</span></span><br><span class="line"><span class="comment"># ctrl + q 继续监控</span></span><br><span class="line"><span class="comment"># 无法监控通过vim更改的记录</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="comment"># 默认显示尾十行</span>
+<span class="built_in">tail</span> 文件
+<span class="comment"># 显示指定行数</span>
+<span class="built_in">tail</span> -n 行数
+<span class="comment"># 实时跟踪文档的所有更新</span>
+<span class="built_in">tail</span> -f 文件
+<span class="comment"># ctrl + s 赞同监控</span>
+<span class="comment"># ctrl + q 继续监控</span>
+<span class="comment"># 无法监控通过vim更改的记录</span></code></pre>
 </li>
 <li><p>eof 标记</p>
 <p>在Linux每个文件末尾都有一个EOF标记，编辑器会自动添加结束标记，而输入文件是键盘时，可以通过键入CTRL_D标记文件结束</p>
@@ -474,7 +543,12 @@
 <h4 id="其他命令-1"><a href="#其他命令-1" class="headerlink" title="其他命令"></a>其他命令</h4><ul>
 <li><p>ln 软链接</p>
 <p>类似于windows中的快捷方式，也称为符号链接，有自己的数据块，存放了链接其他文件的记录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s[原文件或目录] [软链接名]</span><br><span class="line"><span class="comment"># cd加-P可以从软连接直接进入实际的物理路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除软连接</span></span><br><span class="line">rn -rf 软链接名</span><br><span class="line"><span class="comment"># 如果使用rm -rf软链接名/ 删除，会把对应的物理目录删除</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">ln</span> -s[原文件或目录] [软链接名]
+<span class="comment"># cd加-P可以从软连接直接进入实际的物理路径</span>
+
+<span class="comment"># 删除软连接</span>
+rn -rf 软链接名
+<span class="comment"># 如果使用rm -rf软链接名/ 删除，会把对应的物理目录删除</span></code></pre>
 </li>
 <li><p>ln 硬链接</p>
 <p>硬链接和软链接的区别
@@ -482,28 +556,70 @@
 </p>
 </li>
 <li><p>history 查看历史命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看敲过的历史命令</span></span><br><span class="line"><span class="built_in">history</span></span><br><span class="line"><span class="comment"># 查看最近的n条命令</span></span><br><span class="line"><span class="built_in">history</span> n</span><br><span class="line"><span class="comment"># 通过历史编号执行命令</span></span><br><span class="line">!编号</span><br><span class="line"><span class="comment"># 删除历史</span></span><br><span class="line"><span class="built_in">history</span> -c</span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash"><span class="comment"># 查看敲过的历史命令</span>
+<span class="built_in">history</span>
+<span class="comment"># 查看最近的n条命令</span>
+<span class="built_in">history</span> n
+<span class="comment"># 通过历史编号执行命令</span>
+!编号
+<span class="comment"># 删除历史</span>
+<span class="built_in">history</span> -c</code></pre></li>
 </ul>
 <h2 id="时间日期类"><a href="#时间日期类" class="headerlink" title="时间日期类"></a>时间日期类</h2><ul>
 <li><p>基本语法</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示当前时间</span></span><br><span class="line"><span class="built_in">date</span> <span class="comment">#直接显示当前系统的所有时间</span></span><br><span class="line"><span class="comment"># 用特定格式显示时间</span></span><br><span class="line">%Y 年 %m 月 %d 日 %H 时 %M 分 %S 秒</span><br><span class="line"><span class="built_in">date</span> +%Y-%m-%d-%H:%M:%S</span><br><span class="line"><span class="built_in">date</span> <span class="string">&quot;+%Y-%m-%d %H:%M:%S&quot;</span></span><br><span class="line"><span class="comment"># 时间戳 从1970-7-1开始计数</span></span><br><span class="line"><span class="built_in">date</span> +%s 以秒计数</span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="comment"># 显示当前时间</span>
+<span class="built_in">date</span> <span class="comment">#直接显示当前系统的所有时间</span>
+<span class="comment"># 用特定格式显示时间</span>
+%Y 年 %m 月 %d 日 %H 时 %M 分 %S 秒
+<span class="built_in">date</span> +%Y-%m-%d-%H:%M:%S
+<span class="built_in">date</span> <span class="string">&quot;+%Y-%m-%d %H:%M:%S&quot;</span>
+<span class="comment"># 时间戳 从1970-7-1开始计数</span>
+<span class="built_in">date</span> +%s 以秒计数</code></pre>
 </li>
 <li><p>显示非当前时间</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">date</span> -d <span class="string">&#x27;1 day ago&#x27;</span>		<span class="comment"># 显示一天前的时间</span></span><br><span class="line"><span class="built_in">date</span> -d <span class="string">&#x27;-1 day ago&#x27;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">date</span> -d <span class="string">&#x27;1 day ago&#x27;</span>		<span class="comment"># 显示一天前的时间</span>
+<span class="built_in">date</span> -d <span class="string">&#x27;-1 day ago&#x27;</span></code></pre>
 </li>
 <li><p>设置系统时间</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">date</span> -s <span class="string">&quot;2017-09-10 9:17:45&quot;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="highlight bash"><span class="built_in">date</span> -s <span class="string">&quot;2017-09-10 9:17:45&quot;</span></code></pre>
 </li>
 <li><p>查看日历</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前日历</span></span><br><span class="line">cal 	<span class="comment"># 显示当前月份日历</span></span><br><span class="line"><span class="comment"># 查看前后几个月的日历</span></span><br><span class="line">cal -数字</span><br><span class="line"><span class="comment"># 从星期一开始</span></span><br><span class="line">cal -m</span><br><span class="line"><span class="comment"># 指定日期日历</span></span><br><span class="line">cal 日期</span><br></pre></td></tr></table></figure></li>
+<pre><code class="highlight bash"><span class="comment"># 查看当前日历</span>
+cal 	<span class="comment"># 显示当前月份日历</span>
+<span class="comment"># 查看前后几个月的日历</span>
+cal -数字
+<span class="comment"># 从星期一开始</span>
+cal -m
+<span class="comment"># 指定日期日历</span>
+cal 日期</code></pre></li>
 </ul>
-<h2 id="用户权限类"><a href="#用户权限类" class="headerlink" title="用户权限类"></a>用户权限类</h2><h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><h4 id="useradd-添加和查看用户"><a href="#useradd-添加和查看用户" class="headerlink" title="useradd 添加和查看用户"></a>useradd 添加和查看用户</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加用户</span></span><br><span class="line">useradd 用户名 <span class="comment"># 添加新用户</span></span><br><span class="line">passwd 用户名 <span class="comment"># 更改密码</span></span><br><span class="line">useradd -d 文件路径/dave david   <span class="comment"># 创建一个名为david的用户，但将用户文件夹设为dave，放在指定路径下</span></span><br><span class="line"><span class="built_in">id</span> 用户名   <span class="comment"># 查看用户id具体信息</span></span><br></pre></td></tr></table></figure>
+<h2 id="用户权限类"><a href="#用户权限类" class="headerlink" title="用户权限类"></a>用户权限类</h2><h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><h4 id="useradd-添加和查看用户"><a href="#useradd-添加和查看用户" class="headerlink" title="useradd 添加和查看用户"></a>useradd 添加和查看用户</h4><pre><code class="highlight bash"><span class="comment"># 添加用户</span>
+useradd 用户名 <span class="comment"># 添加新用户</span>
+passwd 用户名 <span class="comment"># 更改密码</span>
+useradd -d 文件路径/dave david   <span class="comment"># 创建一个名为david的用户，但将用户文件夹设为dave，放在指定路径下</span>
+<span class="built_in">id</span> 用户名   <span class="comment"># 查看用户id具体信息</span></code></pre>
 
-<h4 id="su-切换用户"><a href="#su-切换用户" class="headerlink" title="su 切换用户"></a>su 切换用户</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换用户</span></span><br><span class="line">su 用户名  <span class="comment"># 直接切换用户,本质是通过层层嵌套实现的，实际上还在原本的用户窗口中</span></span><br><span class="line"><span class="built_in">exit</span> <span class="comment"># 可以通过exit退回上一层用户窗口</span></span><br><span class="line">[root@cent1 ~] su wangdefuck</span><br><span class="line">[root@ceny1 ~] <span class="built_in">whoami</span> <span class="comment"># 输出：wangdefuck</span></span><br><span class="line">[root@cent1 ~] <span class="built_in">who</span> am i  <span class="comment"># 输出：root   pts/0  具体信息</span></span><br><span class="line"><span class="built_in">who</span> am i <span class="comment"># 查看当前用户是谁，显示的是最开始的用户</span></span><br><span class="line"><span class="built_in">whoami</span>  <span class="comment">#查看现在使用的用户是谁</span></span><br></pre></td></tr></table></figure>
+<h4 id="su-切换用户"><a href="#su-切换用户" class="headerlink" title="su 切换用户"></a>su 切换用户</h4><pre><code class="highlight bash"><span class="comment"># 切换用户</span>
+su 用户名  <span class="comment"># 直接切换用户,本质是通过层层嵌套实现的，实际上还在原本的用户窗口中</span>
+<span class="built_in">exit</span> <span class="comment"># 可以通过exit退回上一层用户窗口</span>
+[root@cent1 ~] su wangdefuck
+[root@ceny1 ~] <span class="built_in">whoami</span> <span class="comment"># 输出：wangdefuck</span>
+[root@cent1 ~] <span class="built_in">who</span> am i  <span class="comment"># 输出：root   pts/0  具体信息</span>
+<span class="built_in">who</span> am i <span class="comment"># 查看当前用户是谁，显示的是最开始的用户</span>
+<span class="built_in">whoami</span>  <span class="comment">#查看现在使用的用户是谁</span></code></pre>
 
-<h4 id="sudo-设置普通用户具有root权限"><a href="#sudo-设置普通用户具有root权限" class="headerlink" title="sudo 设置普通用户具有root权限"></a>sudo 设置普通用户具有root权限</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果想要将普通用户添加root权限，首先要更改sudoers配置文件，在文件中root ALL=(ALL) ALL 后面添加</span></span><br><span class="line">sudo 命令  <span class="comment"># 使用root权限执行命令</span></span><br><span class="line"></span><br><span class="line">userdel 用户名   <span class="comment"># 删除用户</span></span><br><span class="line">userdel -r david  <span class="comment"># 用户和用户文件夹都一起删除</span></span><br></pre></td></tr></table></figure>
+<h4 id="sudo-设置普通用户具有root权限"><a href="#sudo-设置普通用户具有root权限" class="headerlink" title="sudo 设置普通用户具有root权限"></a>sudo 设置普通用户具有root权限</h4><pre><code class="highlight bash"><span class="comment"># 如果想要将普通用户添加root权限，首先要更改sudoers配置文件，在文件中root ALL=(ALL) ALL 后面添加</span>
+sudo 命令  <span class="comment"># 使用root权限执行命令</span>
 
-<h3 id="用户组管理"><a href="#用户组管理" class="headerlink" title="用户组管理"></a>用户组管理</h3><h4 id="groupadd-新增用户组"><a href="#groupadd-新增用户组" class="headerlink" title="groupadd 新增用户组"></a>groupadd 新增用户组</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">groupadd 用户组名	<span class="comment"># 创建用户组</span></span><br><span class="line">sudo groupadd developers -g 密码	<span class="comment"># 给用户组设置密码</span></span><br><span class="line">useradd -r -g 用户组名 添加的用户名	<span class="comment"># 给用户组添加用户名</span></span><br><span class="line">usermod -g 用户组名 用户名  <span class="comment"># 将已存在用户添加到用户组中</span></span><br><span class="line">groupmod -n 新的名字 旧的名字  <span class="comment"># 给用户组改名</span></span><br><span class="line">groupdel 用户组   <span class="comment"># 删除用户组</span></span><br></pre></td></tr></table></figure>
+userdel 用户名   <span class="comment"># 删除用户</span>
+userdel -r david  <span class="comment"># 用户和用户文件夹都一起删除</span></code></pre>
+
+<h3 id="用户组管理"><a href="#用户组管理" class="headerlink" title="用户组管理"></a>用户组管理</h3><h4 id="groupadd-新增用户组"><a href="#groupadd-新增用户组" class="headerlink" title="groupadd 新增用户组"></a>groupadd 新增用户组</h4><pre><code class="highlight bash">groupadd 用户组名	<span class="comment"># 创建用户组</span>
+sudo groupadd developers -g 密码	<span class="comment"># 给用户组设置密码</span>
+useradd -r -g 用户组名 添加的用户名	<span class="comment"># 给用户组添加用户名</span>
+usermod -g 用户组名 用户名  <span class="comment"># 将已存在用户添加到用户组中</span>
+groupmod -n 新的名字 旧的名字  <span class="comment"># 给用户组改名</span>
+groupdel 用户组   <span class="comment"># 删除用户组</span></code></pre>
 
 <h3 id="文件属性和权限"><a href="#文件属性和权限" class="headerlink" title="文件属性和权限"></a>文件属性和权限</h3><h4 id="文件属性和权限-1"><a href="#文件属性和权限-1" class="headerlink" title="文件属性和权限"></a>文件属性和权限</h4><ul>
 <li><p>ll或ls -l访问文件属性和权限</p>
@@ -533,9 +649,20 @@
         x -- 可以进入该目录
     &lt;/p&gt;
 </code></pre>
-<h4 id="chmod-修改文件权限"><a href="#chmod-修改文件权限" class="headerlink" title="chmod 修改文件权限"></a>chmod 修改文件权限</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一种方式</span></span><br><span class="line"><span class="built_in">chmod</span> [&#123;u/g/o/a&#125;&#123;+-=&#125;&#123;rwx&#125;] 文件或目录</span><br><span class="line"><span class="comment"># 第二种方式</span></span><br><span class="line"><span class="built_in">chmod</span> [mode=421] [文件或目录]	<span class="comment"># r=4,w=2,x=1  rwx=4+2+1=7</span></span><br><span class="line">1=x,2=w,3=wx,4=r,5=rx,6=rw,7=rwx</span><br><span class="line"><span class="comment"># 从编程思想上看这是将三位rwx表示为三位二进制设计巧妙</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改整个目录的所有权限</span></span><br><span class="line"><span class="built_in">chmod</span> -R 777</span><br></pre></td></tr></table></figure>
+<h4 id="chmod-修改文件权限"><a href="#chmod-修改文件权限" class="headerlink" title="chmod 修改文件权限"></a>chmod 修改文件权限</h4><pre><code class="highlight bash"><span class="comment"># 第一种方式</span>
+<span class="built_in">chmod</span> [&#123;u/g/o/a&#125;&#123;+-=&#125;&#123;rwx&#125;] 文件或目录
+<span class="comment"># 第二种方式</span>
+<span class="built_in">chmod</span> [mode=421] [文件或目录]	<span class="comment"># r=4,w=2,x=1  rwx=4+2+1=7</span>
+1=x,2=w,3=wx,4=r,5=rx,6=rw,7=rwx
+<span class="comment"># 从编程思想上看这是将三位rwx表示为三位二进制设计巧妙</span>
 
-<h4 id="chown-改变所有者"><a href="#chown-改变所有者" class="headerlink" title="chown 改变所有者"></a>chown 改变所有者</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基本语法</span></span><br><span class="line"><span class="built_in">chown</span> [选项] [最终用户] [文件或目录]</span><br><span class="line"><span class="comment"># -R可选，在改变文件夹时可以递归操作</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<span class="comment"># 修改整个目录的所有权限</span>
+<span class="built_in">chmod</span> -R 777</code></pre>
+
+<h4 id="chown-改变所有者"><a href="#chown-改变所有者" class="headerlink" title="chown 改变所有者"></a>chown 改变所有者</h4><pre><code class="highlight BASH"><span class="comment"># 基本语法</span>
+<span class="built_in">chown</span> [选项] [最终用户] [文件或目录]
+<span class="comment"># -R可选，在改变文件夹时可以递归操作</span>
+</code></pre>
 
 <h4 id="chgrp-改变所属组"><a href="#chgrp-改变所属组" class="headerlink" title="chgrp 改变所属组"></a>chgrp 改变所属组</h4><p><strong>修改所属组需要超级管理员权限</strong></p>
 <p>语法：chgrp 修改后的组名 需要修改的文件</p>
